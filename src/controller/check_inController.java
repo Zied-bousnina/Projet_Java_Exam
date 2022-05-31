@@ -199,7 +199,7 @@ public class check_inController implements Initializable {
     	}else if (getDifferenceDays(Date.from(todayDate.atStartOfDay(defaultZoneId).toInstant()),Date.from(check_in_date.getValue().atStartOfDay(defaultZoneId).toInstant()))<0) {
     		Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Date");
-			alert.setContentText("Date of reservation should be from Min Today");
+			alert.setContentText("Date of reservation should be from Today");
 			alert.show();
 		}
     	else if (getDifferenceDays(Date.from(check_in_date.getValue().atStartOfDay(defaultZoneId).toInstant()),Date.from(check_out_date.getValue().atStartOfDay(defaultZoneId).toInstant()))<0) {
@@ -332,7 +332,7 @@ public class check_inController implements Initializable {
 		}else {
 
     		System.out.println(getDifferenceDays(Date.from(check_in_date.getValue().atStartOfDay(defaultZoneId).toInstant()),Date.from(check_out_date.getValue().atStartOfDay(defaultZoneId).toInstant())));
-    	guests g =new guests( Integer.parseInt( roomIDG), nameG, emailG, addressG, cityG, nationnalityG, passportG,  getDifferenceDays(Date.from(check_in_date.getValue().atStartOfDay(defaultZoneId).toInstant()),Date.from(check_out_date.getValue().atStartOfDay(defaultZoneId).toInstant())), 0, phoneG, cardNumberG,cvcCodeG  );
+    	guests g =new guests( Integer.parseInt( roomIDG), nameG, emailG, addressG, cityG, nationnalityG, passportG,  getDifferenceDays(Date.from(check_in_date.getValue().atStartOfDay(defaultZoneId).toInstant()),Date.from(check_out_date.getValue().atStartOfDay(defaultZoneId).toInstant())), calcFees(getRoomTypeValue(),getRoomCapacityValue(),getDifferenceDays(Date.from(check_in_date.getValue().atStartOfDay(defaultZoneId).toInstant()),Date.from(check_out_date.getValue().atStartOfDay(defaultZoneId).toInstant()))), phoneG, cardNumberG,cvcCodeG  );
 //    	table.getItems().add(p);
     	System.out.println(g.toString());
     	
@@ -375,6 +375,92 @@ public class check_inController implements Initializable {
             RoomCapacity = "Triple";
         }
         return RoomCapacity;
+    }
+    
+    public Double calcFees(String type, String capacity, Integer day) {
+    	double sum = 0;
+    	
+//    	Type
+    	double Economy=50;
+    	double normal =75;
+    	double vip=150;
+    	
+//    	Capacity
+    	 
+    	
+    	
+    	switch (type) {
+		case "Economy": {
+			switch (capacity) {
+			case "Single": {
+				sum+=Economy;
+				break;
+				
+			}
+			case "Double" :{
+				sum+=Economy*1.5;
+				break;
+				
+			}
+			case "Triple":{
+				sum+=Economy*2;
+				break;
+				
+			}
+			
+			}
+			break;
+			
+//			yield type;
+		}
+        case "Normal": {
+        	switch (capacity) {
+			case "Single": {
+				sum+=normal;
+				break;
+				
+				
+			}
+			case "Double" :{
+				sum+=normal*1.5;
+				break;
+			}
+			case "Triple":{
+				sum+=normal*2;
+				break;
+				
+			}
+			
+			}
+        	break;
+		}
+        case "Vip": {
+        	switch (capacity) {
+			case "Single": {
+				sum+=vip;
+				break;
+				
+				
+			}
+			case "Double" :{
+				sum+=vip*1.5;
+				break;
+				
+			}
+			case "Triple":{
+				sum+=vip*2;
+				break;
+				
+			}
+			
+			}
+        	break;
+        	
+        }
+		
+		}
+    	return sum*day;
+    	
     }
 
 	@Override
