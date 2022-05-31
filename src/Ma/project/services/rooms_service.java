@@ -48,6 +48,18 @@ public class rooms_service implements IDao<room> {
 	@Override
 	public boolean delete(room o) {
 		// TODO Auto-generated method stub
+		try {
+			String req = "delete from room where roomID="+o.getRoomID();
+			Statement st =connexion.getCn().createStatement();
+			
+			if (st.executeUpdate(req)==1) {
+				return true;
+				
+			}
+		} catch (SQLException e) {
+			System.out.println("ERROR sql");
+			// TODO: handle exception
+		}
 		return false;
 	}
 
@@ -60,11 +72,28 @@ public class rooms_service implements IDao<room> {
 	@Override
 	public ObservableList<room> findAll() {
 		// TODO Auto-generated method stub
-		ObservableList<room> room = FXCollections.observableArrayList();
-		try {
-			String req = "select * from room";
+//		ObservableList<room> room = FXCollections.observableArrayList();
+//		try {
+//			String req = "select * from room where isEmpty=1";
 			
 //			Statement st = connexion.getCn().createStatement();
+//			PreparedStatement ps = connexion.getCn().prepareStatement(req);
+//			ResultSet rs= ps.executeQuery(req);
+//			while (rs.next()) {
+//				room.add(new room(rs.getInt("roomID"), rs.getString("room_type"), rs.getString("room_capacity"), rs.getString("Check_In_Date"),rs.getString("Check_Out_Date"), rs.getInt("isEmpty")));
+//				
+//				
+//			}
+//			
+//		} catch (SQLException e) {
+//			// TODO: handle exception
+//			System.out.println("ERROR SQl find All room");
+//		}
+//		
+//		return room;
+		ObservableList<room> room = FXCollections.observableArrayList();
+		try {
+			String req = "select * from room ";
 			PreparedStatement ps = connexion.getCn().prepareStatement(req);
 			ResultSet rs= ps.executeQuery(req);
 			while (rs.next()) {
@@ -75,9 +104,9 @@ public class rooms_service implements IDao<room> {
 			
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("ERROR SQl finAll room");
+			System.out.println("error to find allr room");
+			System.out.println(e.toString());
 		}
-		
 		return room;
 	}
 

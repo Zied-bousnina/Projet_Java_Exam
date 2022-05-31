@@ -8,7 +8,7 @@ public class connexion {
 
 	 private static String login = "root";
 	    private static String password = "";
-	    private static String url = "jdbc:mysql://localhost/hotel";
+	    private static String url = "jdbc:mysql://localhost/hotel?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&characterSetResults=UTF-8";
 	    private static Connection cn;
 	    static {
 	        try {

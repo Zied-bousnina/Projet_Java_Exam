@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 
@@ -52,6 +53,36 @@ public class roomsController implements Initializable {
     
     @FXML
     private MenuButton Menu;
+    
+    
+    @FXML
+    public void remove(ActionEvent event) {
+    	System.out.println((table.getSelectionModel().getSelectedItems()).isEmpty());
+    	if ((table.getSelectionModel().getSelectedItems()).isEmpty()) {
+    		Alert alert= new Alert(Alert.AlertType.ERROR);
+    		alert.setTitle("Error !!");
+    		alert.setContentText("Choisir une ligne SVP!!");
+    		alert.showAndWait();
+			
+		}else {
+			
+    	Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("CheckIn & checkOut  ");
+		alert.setContentText("Verif CheckIn and the checkOut date  !");
+		alert.showAndWait();
+		System.out.println(alert.getResult().getText());
+//		System.out.println((alert.getResult().getText()) =="OK");
+		if(alert.getResult().getText().equals("OK")) {
+			
+    	rooms_service ps=new rooms_service();
+    	ps.delete(table.getSelectionModel().getSelectedItems().get(0));
+    	
+//    	for test :)
+    	System.out.println(table.getSelectionModel().getSelectedItems().get(0).getRoomID());
+		}
+		}
+
+    }
 
     @FXML
     void GoToCheckIn(ActionEvent event) throws IOException {

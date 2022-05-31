@@ -3,6 +3,7 @@ package Ma.project.services;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import Ma.project.Beans.guests;
@@ -33,6 +34,18 @@ public class guests_service implements IDao<guests> {
 	@Override
 	public boolean delete(guests o) {
 		// TODO Auto-generated method stub
+		try {
+			String req = "delete from guest where email='"+o.getEmail()+"'";
+			Statement st =connexion.getCn().createStatement();
+			
+			if (st.executeUpdate(req)==1) {
+				return true;
+				
+			}
+		} catch (SQLException e) {
+			System.out.println("ERROR sql");
+			// TODO: handle exception
+		}
 		return false;
 	}
 

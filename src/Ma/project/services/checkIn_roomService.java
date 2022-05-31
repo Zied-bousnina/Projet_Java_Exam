@@ -62,9 +62,9 @@ public class checkIn_roomService  implements IDao<room>{
 //		}
 //		return false;
 //	}
-	public boolean updateEmptyRoom(Integer id) {
+	public boolean updateEmptyRoom(String check_in,String check_out,Integer id) {
 		try {
-			String req = "update room set  isEmpty =0 where roomID= "+id+"";
+			String req = "update room set  isEmpty =0 and Check_in_date='"+check_in+"' and Check_Out_Date='"+check_out+"' where roomID= "+id+"";
 			Statement st = connexion.getCn().createStatement();
 			if(st.executeUpdate(req)==1) {
 				
@@ -72,7 +72,7 @@ public class checkIn_roomService  implements IDao<room>{
 			}
 			
 		} catch (SQLException ex) {
-		System.out.println("Erreur SQL ssssss");
+		System.out.println("Erreur SQL updateEmpty Room");
 		System.out.println(ex.getMessage());
 		}
 		return false;
