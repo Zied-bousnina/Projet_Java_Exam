@@ -154,6 +154,28 @@ public class check_inController implements Initializable {
 //    	check_out_date.getValue()+"";
     	
     	roomID.setText("");
+    	
+    	   name_error.setText("");;
+
+    	    phone_error.setText("");
+
+    	   email_error.setText("");
+
+    	   address_error.setText("");
+
+    	    city_error.setText("");
+
+    	    nat_error.setText("");
+
+    	     passport_error.setText("");
+    	    
+    	     cardN_error.setText("");
+
+    	     cvc_error.setText("");
+    	     
+
+    	
+    	
 
     }
 
@@ -290,6 +312,7 @@ public class check_inController implements Initializable {
     	String RoomCapacity=getRoomCapacityValue();
     	String RoomType=getRoomTypeValue();
     	String roomIDG = roomID.getText();
+    	
     	ZoneId defaultZoneId = ZoneId.systemDefault();
     	
     	if (nameG.isEmpty() || phoneG.isEmpty() || emailG.isEmpty() || addressG.isEmpty()
@@ -397,7 +420,7 @@ public class check_inController implements Initializable {
     	
     	address.focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) { //when focus lost
-                if(!address.getText().matches("^[a-zA-Z0-9_.-]*$")){
+                if(!address.getText().matches("^[a-zA-Z0-9 _.-]*$")){
                     //when it not matches the pattern (1.0 - 6.0)
                     //set the textField empty
                     address_error.setText("Address must contain only\n letters and Number");
