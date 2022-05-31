@@ -502,7 +502,7 @@ public class check_inController implements Initializable {
     void handle_passField(KeyEvent event) {
     	passport.focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) { //when focus lost
-                if(passport.getText().matches("[A-Za-z\\\\s]{2,}") || passport.getText().length()!=3 ){
+                if(passport.getText().matches("[A-Za-z\\\\s]{2,}") || passport.getText().length() !=8 ){
                     //when it not matches the pattern (1.0 - 6.0)
                     //set the textField empty
                     passport_error.setText("passport must contain only Chiffre and 3 chiffre");
