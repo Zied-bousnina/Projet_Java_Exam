@@ -160,6 +160,10 @@ public class check_inController implements Initializable {
     @FXML
     void searchbtn(ActionEvent event) {
     	ZoneId defaultZoneId = ZoneId.systemDefault();
+    	LocalDate todayDate = LocalDate.now();
+    	System.out.println(todayDate);
+    	System.out.println();
+    	
     	
     	
 //    	System.out.println(getRoomCapacityValue() ==null);
@@ -170,7 +174,13 @@ public class check_inController implements Initializable {
     		alert.setTitle("Champs Vide !!");
     		alert.setContentText("verifier votre donner de Room Data");
     		alert.show();
-    	}else if (getDifferenceDays(Date.from(check_in_date.getValue().atStartOfDay(defaultZoneId).toInstant()),Date.from(check_out_date.getValue().atStartOfDay(defaultZoneId).toInstant()))<0) {
+    	}else if (getDifferenceDays(Date.from(todayDate.atStartOfDay(defaultZoneId).toInstant()),Date.from(check_in_date.getValue().atStartOfDay(defaultZoneId).toInstant()))<0) {
+    		Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Date");
+			alert.setContentText("Date of reservation should be from Min Today");
+			alert.show();
+		}
+    	else if (getDifferenceDays(Date.from(check_in_date.getValue().atStartOfDay(defaultZoneId).toInstant()),Date.from(check_out_date.getValue().atStartOfDay(defaultZoneId).toInstant()))<0) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Date");
 			alert.setContentText("verifier le date de reservation svp");
@@ -187,11 +197,12 @@ public class check_inController implements Initializable {
 		 System.out.println(getRoomCapacityValue());
 		 System.out.println(check_out_date.getValue().toString());
 //		 System.out.println(listG.get(0).getRoomID());
-		 System.out.println(listG.get(0).getRoomID());
-		 if (listG == null ||listG.isEmpty()) {
+//		 System.out.println(listG.get(0).getRoomID());
+		 System.out.println(listG.size());
+		 if (listG.size()==0) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("error");
-			alert.setContentText("ne trouve Aucune room disponible  avec ses caractéristiques");
+			alert.setContentText(" Aucune room disponible  avec ses caractéristiques");
 			alert.show();
 		} else {
 			
@@ -380,9 +391,26 @@ public class check_inController implements Initializable {
 //            }
 //        }
     }
-
+    static boolean handle_addressField =false;
     @FXML
     void handle_addressField(KeyEvent event) {
+    	
+    	address.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+            if (!newValue) { //when focus lost
+                if(!address.getText().matches("^[a-zA-Z0-9_.-]*$")){
+                    //when it not matches the pattern (1.0 - 6.0)
+                    //set the textField empty
+                    address_error.setText("Address must contain only\n letters and Number");
+                    address_error.setTextFill(Color.RED);
+                    handle_addressField = true;
+                }else {
+                	address_error.setText("valid");
+                    address_error.setTextFill(Color.GREEN);
+                	
+                }
+            }
+
+        });
     	
 
     }
@@ -416,7 +444,7 @@ public class check_inController implements Initializable {
                 if(!city.getText().matches("[A-Za-z\\\\s]{2,}")){
                     //when it not matches the pattern (1.0 - 6.0)
                     //set the textField empty
-                    city_error.setText("City must contain only letters");
+                    city_error.setText("City must contain only letters and Min 2 lettres");
                     city_error.setTextFill(Color.RED);
                     handle_cityField = true;
                 }else {

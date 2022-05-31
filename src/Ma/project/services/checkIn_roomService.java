@@ -64,7 +64,7 @@ public class checkIn_roomService  implements IDao<room>{
 //	}
 	public boolean updateEmptyRoom(String check_in,String check_out,Integer id) {
 		try {
-			String req = "update room set  isEmpty =0 and Check_in_date='"+check_in+"' and Check_Out_Date='"+check_out+"' where roomID= "+id+"";
+			String req = "update room set  isEmpty =0 , Check_in_date='"+check_in+"' , Check_Out_Date='"+check_out+"' where roomID= "+id+"";
 			Statement st = connexion.getCn().createStatement();
 			if(st.executeUpdate(req)==1) {
 				
